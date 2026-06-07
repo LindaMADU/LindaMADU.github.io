@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Linda M-Okoronkwo — Data Engineer Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f5ede4;
+  --bg2:#ede0d4;
+  --bg3:#faf4ef;
+  --surface:#ffffff;
+  --surface2:#f9f0e8;
+  --border:#e0c8b4;
+  --border2:#c8a888;
+  --text:#2a1a0e;
+  --text-mid:#5c3d28;
+  --text-muted:#9c7a60;
+  --coral:#c8440a;
+  --coral-bg:#fdf0ea;
+  --coral-border:#f0b898;
+  --teal:#0a8a6a;
+  --teal-bg:#e8f8f3;
+  --teal-border:#80d8c0;
+  --gold:#b87800;
+  --gold-bg:#fdf6e0;
+  --gold-border:#e8cc80;
+  --violet:#8a4090;
+  --violet-bg:#f8eefa;
+  --violet-border:#d8a8e0;
+  --pink:#c0305a;
+  --pink-bg:#fceef3;
+  --pink-border:#e8a0b8;
+  --sky:#1870b8;
+  --sky-bg:#eaf4fc;
+  --sky-border:#90c8f0;
+  --lime:#5a8a10;
+  --lime-bg:#f0f8e4;
+  --lime-border:#b0d878;
+  --rose:#b83060;
+  --rose-bg:#fceef4;
+  --rose-border:#e898b8;
+  --sans:'Plus Jakarta Sans',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --nav-h:66px;
+  --r:12px;
+  --rs:8px;
+}
+
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--text);
+  font-size:15px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:#2a1408;}
+::-webkit-scrollbar-thumb{background:var(--rose);border-radius:3px;}
+
+/* ── BOLD MESH BG ── */
+.mesh{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 70% 55% at 0% 0%,    #f0c8a833 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 100% 0%,  #e8a0c033 0%, transparent 50%),
+    radial-gradient(ellipse 50% 45% at 0% 90%,   #b0d8c022 0%, transparent 55%),
+    radial-gradient(ellipse 55% 45% at 100% 80%, #d8b0e828 0%, transparent 50%),
+    radial-gradient(ellipse 40% 40% at 50% 50%,  #f8d8b018 0%, transparent 55%);
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(180,120,80,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180,120,80,0.06) 1px, transparent 1px);
+  background-size:52px 52px;
+}
+
+/* ── EDIT GUIDE BANNER ── */
+.edit-guide{
+  position:relative;z-index:200;
+  background:linear-gradient(90deg,#3a1a08,#6a2c10,#3a1a08);
+  border-bottom:2px solid var(--coral);
+  padding:10px 5%;
+  display:flex;align-items:center;gap:14px;
+  flex-wrap:wrap;
+}
+.edit-guide .eg-title{
+  font-family:var(--mono);font-size:11px;font-weight:700;
+  color:#fff8f0;text-transform:uppercase;letter-spacing:0.08em;
+  background:#8b3a10;border:1px solid #c05020;
+  padding:3px 10px;border-radius:4px;white-space:nowrap;
+}
+.edit-guide .eg-text{
+  font-size:12px;color:#f5d8c0;flex:1;
+}
+.eg-toggle{
+  font-family:var(--mono);font-size:11px;font-weight:700;
+  color:#fff;background:var(--coral);
+  border:none;border-radius:4px;padding:5px 14px;
+  cursor:pointer;white-space:nowrap;
+  transition:opacity 0.2s;
+}
+.eg-toggle:hover{opacity:0.85;}
+
+/* edit guide panel */
+.edit-panel{
+  display:none;
+  position:fixed;inset:0;z-index:500;
+  background:rgba(45,26,10,0.70);
+  backdrop-filter:blur(8px);
+  overflow-y:auto;
+  padding:40px 5%;
+}
+.edit-panel.open{display:block;}
+.ep-inner{
+  max-width:780px;margin:0 auto;
+  background:#faf4ee;
+  border:1px solid var(--border);
+  border-radius:16px;padding:40px;
+}
+.ep-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:28px;
+}
+.ep-header h2{
+  font-size:22px;font-weight:800;color:#2d1a0a;
+}
+.ep-close{
+  background:var(--coral);color:#fff;border:none;
+  border-radius:6px;padding:8px 18px;
+  font-family:var(--mono);font-size:12px;font-weight:700;
+  cursor:pointer;transition:opacity 0.2s;
+}
+.ep-close:hover{opacity:0.85;}
+.ep-section{margin-bottom:28px;}
+.ep-section h3{
+  font-family:var(--mono);font-size:12px;font-weight:700;
+  color:var(--coral);text-transform:uppercase;letter-spacing:0.08em;
+  margin-bottom:12px;padding-bottom:8px;
+  border-bottom:1px solid var(--border);
+}
+.ep-item{
+  background:#2a1408;border:1px solid var(--border);
+  border-radius:var(--rs);padding:14px 16px;margin-bottom:10px;
+}
+.ep-item .label{
+  font-family:var(--mono);font-size:11px;font-weight:600;
+  color:var(--teal);margin-bottom:5px;
+}
+.ep-item .instruction{font-size:13px;color:#6b4428;line-height:1.7;}
+.ep-item code{
+  font-family:var(--mono);font-size:11px;
+  background:#fdf0e6;color:var(--coral);
+  padding:2px 7px;border-radius:3px;
+  display:inline-block;margin-top:4px;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:var(--nav-h);
+  background:rgba(245,237,228,0.96);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 5%;
+}
+.nav-brand{
+  font-family:var(--mono);font-size:14px;font-weight:700;
+  color:var(--text);text-decoration:none;
+  display:flex;align-items:center;gap:10px;
+}
+.nb-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:linear-gradient(135deg,var(--coral),var(--rose));
+  box-shadow:0 0 8px #c8440a55;
+}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{
+  font-size:13px;font-weight:600;color:var(--text-mid);
+  text-decoration:none;transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--rose);}
+.nav-cta{
+  padding:9px 22px;
+  background:linear-gradient(135deg,var(--coral),var(--rose));
+  color:#fff;border-radius:var(--rs);
+  font-size:13px;font-weight:700;text-decoration:none;
+  box-shadow:0 2px 16px #c8440a33;
+  transition:box-shadow 0.2s,transform 0.15s;
+  /* EDIT: replace href below with your actual CV file name */
+}
+.nav-cta:hover{box-shadow:0 4px 24px #ff6b3577;transform:translateY(-1px);}
+
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:1;
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:calc(var(--nav-h)+80px) 5% 100px;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 18px;border-radius:20px;
+  background:var(--coral-bg);border:1px solid var(--coral-border);
+  font-family:var(--mono);font-size:11px;font-weight:700;
+  color:var(--coral);letter-spacing:0.06em;
+  margin-bottom:28px;width:fit-content;
+}
+.hb-dot{width:8px;height:8px;border-radius:50%;background:var(--coral);box-shadow:0 0 8px var(--coral);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.8);}}
+
+h1{
+  font-size:clamp(48px,6.5vw,88px);
+  font-weight:800;line-height:1.03;
+  max-width:860px;margin-bottom:8px;
+}
+.h1-name{color:var(--text);}
+.h1-role{
+  display:block;
+  background:linear-gradient(90deg,var(--coral) 0%,var(--rose) 45%,var(--violet) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero-sub{
+  font-size:17px;font-weight:400;color:var(--text-mid);
+  max-width:620px;line-height:1.8;margin:22px 0 42px;
+}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:52px;}
+.btn-primary{
+  padding:14px 32px;
+  background:linear-gradient(135deg,var(--coral),var(--rose));
+  color:#fff;border-radius:var(--rs);
+  font-size:14px;font-weight:800;text-decoration:none;
+  box-shadow:0 4px 24px #c8440a33;
+  transition:box-shadow 0.2s,transform 0.15s;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary:hover{box-shadow:0 6px 32px #c8440a44;transform:translateY(-2px);}
+.btn-outline{
+  padding:14px 32px;background:transparent;color:var(--text);
+  border:2px solid var(--border2);border-radius:var(--rs);
+  font-size:14px;font-weight:700;text-decoration:none;
+  transition:border-color 0.2s,color 0.2s,transform 0.15s;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.btn-outline:hover{border-color:var(--violet);color:var(--violet);transform:translateY(-2px);}
+
+.hero-stack{display:flex;flex-wrap:wrap;gap:10px;}
+.schip{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 16px;border-radius:var(--rs);
+  background:var(--surface);border:1px solid var(--border);
+  font-size:12px;font-weight:700;color:var(--text);
+  transition:border-color 0.2s,box-shadow 0.2s,transform 0.15s;
+  cursor:default;
+}
+.schip:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(255,107,53,0.2);}
+.cdot{width:8px;height:8px;border-radius:50%;}
+
+/* ── SECTION ── */
+section{position:relative;z-index:1;padding:100px 5%;}
+section.alt{background:var(--bg2);}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:11px;font-weight:700;
+  color:var(--coral);letter-spacing:0.09em;text-transform:uppercase;
+  margin-bottom:14px;
+  padding:5px 14px;border-radius:20px;
+  background:var(--coral-bg);border:1px solid var(--coral-border);
+}
+h2{
+  font-size:clamp(30px,4vw,50px);font-weight:800;
+  line-height:1.1;margin-bottom:14px;color:var(--text);
+}
+.section-intro{
+  font-size:16px;color:var(--text-mid);font-weight:400;
+  max-width:560px;line-height:1.8;margin-bottom:60px;
+}
+
+/* ── ABOUT ── */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+.about-left p{color:var(--text-mid);font-weight:400;line-height:1.85;margin-bottom:16px;font-size:15px;}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:36px;}
+.astat{
+  padding:22px 24px;border-radius:var(--r);
+  border:1px solid var(--border);background:var(--surface);
+  transition:box-shadow 0.2s,transform 0.15s,border-color 0.2s;
+}
+.astat:hover{box-shadow:0 4px 24px #c8440a22;transform:translateY(-2px);border-color:var(--coral);}
+.astat .num{
+  font-size:32px;font-weight:800;margin-bottom:4px;
+  background:linear-gradient(135deg,var(--coral),var(--rose));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.astat .lbl{font-size:11px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:0.07em;}
+
+.skills-panel{display:flex;flex-direction:column;gap:26px;}
+.sg h3{
+  font-size:11px;font-weight:800;color:var(--text-muted);
+  text-transform:uppercase;letter-spacing:0.09em;margin-bottom:10px;
+}
+.sbadges{display:flex;flex-wrap:wrap;gap:8px;}
+.sb{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 14px;border-radius:var(--rs);
+  font-size:12px;font-weight:700;border:1px solid transparent;
+  transition:transform 0.15s,box-shadow 0.15s;cursor:default;
+}
+.sb:hover{transform:translateY(-2px);}
+.sb-coral  {background:var(--coral-bg); color:var(--coral); border-color:var(--coral-border);}
+.sb-teal   {background:var(--teal-bg);  color:var(--teal);  border-color:var(--teal-border);}
+.sb-gold   {background:var(--gold-bg);  color:var(--gold);  border-color:var(--gold-border);}
+.sb-violet {background:var(--violet-bg);color:var(--violet);border-color:var(--violet-border);}
+.sb-pink   {background:var(--pink-bg);  color:var(--pink);  border-color:var(--pink-border);}
+.sb-sky    {background:var(--sky-bg);   color:var(--sky);   border-color:var(--sky-border);}
+.sb-lime   {background:var(--lime-bg);  color:var(--lime);  border-color:var(--lime-border);}
+.sb-muted  {background:var(--surface);  color:var(--text-mid);border-color:var(--border);}
+
+/* ── PROJECTS ── */
+.projects-grid{display:flex;flex-direction:column;gap:28px;}
+.pcard{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);overflow:hidden;
+  transition:box-shadow 0.25s,transform 0.2s,border-color 0.2s;
+}
+.pcard:hover{transform:translateY(-3px);}
+.ptop{padding:10px 28px;display:flex;align-items:center;justify-content:space-between;}
+.pbody{padding:28px 32px 32px;}
+.pmeta{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;}
+.pnum{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:0.07em;}
+.ptypebadge{font-size:11px;font-weight:800;padding:3px 12px;border-radius:20px;border:1px solid transparent;letter-spacing:0.04em;}
+.pcard h3{font-size:21px;font-weight:800;margin-bottom:10px;color:var(--text);}
+.psummary{font-size:14px;color:var(--text-mid);font-weight:400;line-height:1.8;margin-bottom:22px;}
+.pdetails{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px;}
+.dblock{padding:16px 18px;border-radius:var(--rs);border:1px solid;}
+.dblock h4{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;}
+.dblock p{font-size:13px;color:var(--text-mid);line-height:1.75;font-weight:400;}
+.ptags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px;}
+.ptag{
+  font-family:var(--mono);font-size:11px;font-weight:600;
+  padding:4px 12px;border-radius:var(--rs);
+  background:#2a1408;color:var(--text-mid);border:1px solid var(--border);
+}
+.pfooter{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:18px;border-top:1px solid var(--border);
+  flex-wrap:wrap;gap:12px;
+}
+.poutcomes{display:flex;gap:16px;flex-wrap:wrap;}
+.outcome{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--text-mid);}
+.odot{width:7px;height:7px;border-radius:50%;}
+.plinks{display:flex;gap:8px;}
+.plink{
+  font-family:var(--mono);font-size:12px;font-weight:700;
+  padding:8px 20px;border-radius:var(--rs);text-decoration:none;
+  display:inline-flex;align-items:center;gap:7px;
+  transition:box-shadow 0.15s,transform 0.15s,opacity 0.15s;
+  letter-spacing:0.03em;
+}
+.plink:hover{transform:translateY(-2px);}
+.pl-primary{color:#fff;}
+.pl-ghost{background:transparent;color:var(--text-mid);border:1px solid var(--border2);}
+.pl-ghost:hover{color:var(--text);border-color:var(--text-mid);}
+
+/* ── CERTS ── */
+.certs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;}
+.cert-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:24px;
+  transition:box-shadow 0.2s,transform 0.15s;
+  position:relative;overflow:hidden;
+  text-decoration:none;display:block;
+  cursor:pointer;
+}
+.cert-card:hover{transform:translateY(-3px);}
+.cert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;}
+.cert-icon{font-size:28px;margin-bottom:14px;display:block;}
+.cert-card h4{font-size:14px;font-weight:800;margin-bottom:5px;color:var(--text);}
+.cert-issuer{font-family:var(--mono);font-size:11px;color:var(--text-muted);font-weight:600;}
+.cert-status{
+  display:inline-flex;align-items:center;gap:5px;
+  margin-top:12px;font-size:10px;font-weight:800;
+  text-transform:uppercase;letter-spacing:0.08em;
+  padding:4px 11px;border-radius:20px;border:1px solid;
+}
+.cert-upload-hint{
+  font-size:11px;color:var(--text-muted);margin-top:10px;
+  font-style:italic;line-height:1.5;
+}
+.cs-active{background:var(--teal-bg);color:var(--teal);border-color:var(--teal-border);}
+.cs-progress{background:var(--gold-bg);color:var(--gold);border-color:var(--gold-border);}
+
+/* ── CONTACT ── */
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+.contact-left p{color:var(--text-mid);font-weight:400;line-height:1.85;margin-bottom:32px;font-size:15px;}
+.contact-links{display:flex;flex-direction:column;gap:12px;}
+
+/* IMPORTANT: these are the main clickable links */
+.clink{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 20px;background:var(--surface);
+  border:1px solid var(--border);border-radius:var(--r);
+  text-decoration:none;color:var(--text);
+  transition:border-color 0.2s,box-shadow 0.2s,transform 0.15s;
+}
+.clink:hover{transform:translateY(-2px);}
+.clink-icon{
+  width:42px;height:42px;border-radius:var(--rs);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;
+}
+.clink-text strong{display:block;font-size:14px;font-weight:800;color:var(--text);}
+.clink-text span{font-family:var(--mono);font-size:11px;color:var(--text-muted);}
+.clink-arrow{margin-left:auto;font-size:16px;color:var(--text-muted);}
+
+.contact-form{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:32px;
+}
+.contact-form h3{font-size:20px;font-weight:800;margin-bottom:22px;color:var(--text);}
+.form-field{margin-bottom:14px;}
+.form-field label{
+  display:block;font-size:11px;font-weight:800;
+  color:var(--text-mid);text-transform:uppercase;
+  letter-spacing:0.08em;margin-bottom:6px;
+}
+.form-field input,.form-field textarea{
+  width:100%;padding:12px 15px;
+  background:#2a1408;border:1.5px solid var(--border);
+  border-radius:var(--rs);font-family:var(--sans);
+  font-size:13px;color:var(--text);outline:none;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.form-field input::placeholder,.form-field textarea::placeholder{color:var(--text-muted);}
+.form-field input:focus,.form-field textarea:focus{
+  border-color:var(--violet);box-shadow:0 0 0 3px #8a409022;
+}
+.form-field textarea{height:108px;resize:vertical;}
+.form-submit{
+  width:100%;padding:14px;
+  background:linear-gradient(135deg,var(--coral),var(--rose));
+  color:#fff;border:none;border-radius:var(--rs);
+  font-family:var(--sans);font-size:14px;font-weight:800;
+  cursor:pointer;box-shadow:0 4px 20px #c8440a33;
+  transition:box-shadow 0.2s,transform 0.15s;
+}
+.form-submit:hover{box-shadow:0 6px 28px #c8440a44;transform:translateY(-1px);}
+
+/* ── FOOTER ── */
+footer{
+  position:relative;z-index:1;
+  padding:36px 5%;
+  background:#2a1408;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:13px;flex-wrap:wrap;gap:12px;
+}
+.footer-brand{display:flex;align-items:center;gap:10px;font-weight:700;color:#fdf4ec;}
+.footer-dot{width:9px;height:9px;border-radius:50%;background:var(--coral);box-shadow:0 0 8px var(--coral);animation:pulse 2s ease-in-out infinite;}
+.footer-links{display:flex;gap:20px;}
+.footer-links a{color:#d4b090;text-decoration:none;font-weight:600;transition:color 0.2s;}
+.footer-links a:hover{color:var(--gold);}
+
+@media(max-width:768px){
+  .about-grid,.contact-wrap{grid-template-columns:1fr;gap:40px;}
+  .pdetails{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+}
+</style>
+</head>
+<body>
+<div class="mesh"></div>
+
+<!-- ════════════════════════════════════
+     EDIT GUIDE BANNER
+     Click "How to Edit" to see instructions
+     ════════════════════════════════════ -->
+<div class="edit-guide">
+  <span class="eg-title">✏️ Owner Guide</span>
+  <span class="eg-text">Personalise all links, project URLs, certifications & contact info</span>
+  <button class="eg-toggle" onclick="document.getElementById('editPanel').classList.toggle('open')">How to Edit ▾</button>
+</div>
+
+<!-- EDIT PANEL MODAL -->
+<div class="edit-panel" id="editPanel">
+  <div class="ep-inner">
+    <div class="ep-header">
+      <h2>✏️ Portfolio Edit Guide</h2>
+      <button class="ep-close" onclick="document.getElementById('editPanel').classList.remove('open')">✕ Close</button>
+    </div>
+
+    <div class="ep-section">
+      <h3>🔗 Step 1 — Update Your Contact Links</h3>
+      <div class="ep-item">
+        <div class="label">GitHub Link</div>
+        <div class="instruction">Find the section with the 🐙 GitHub card. Replace the <strong>href</strong> value with your real GitHub URL.<br/>
+        <code>href="https://github.com/YOUR-USERNAME"</code></div>
+      </div>
+      <div class="ep-item">
+        <div class="label">LinkedIn Link</div>
+        <div class="instruction">Find the 💼 LinkedIn card. Replace the href with your LinkedIn profile URL.<br/>
+        <code>href="https://linkedin.com/in/YOUR-PROFILE"</code></div>
+      </div>
+      <div class="ep-item">
+        <div class="label">Email Link</div>
+        <div class="instruction">Find the ✉️ Email card. Replace the mailto address with your real email.<br/>
+        <code>href="mailto:your.email@domain.com"</code></div>
+      </div>
+      <div class="ep-item">
+        <div class="label">CV / Resume Download</div>
+        <div class="instruction">Upload your CV file to your GitHub repo root, then update the link.<br/>
+        <code>href="your-cv-filename.pdf"</code><br/>
+        Also update the nav "Download CV" button with the same filename.</div>
+      </div>
+    </div>
+
+    <div class="ep-section">
+      <h3>📁 Step 2 — Link Each Project to GitHub</h3>
+      <div class="ep-item">
+        <div class="label">Project GitHub Buttons</div>
+        <div class="instruction">Each project card has a "View on GitHub →" button. Find each one and replace the href:<br/>
+        <code>href="https://github.com/YOUR-USERNAME/your-repo-name"</code><br/>
+        Do this for all 5 projects. If a project isn't on GitHub yet, you can link it to your main GitHub profile for now.</div>
+      </div>
+    </div>
+
+    <div class="ep-section">
+      <h3>🏆 Step 3 — Add / Upload Certifications</h3>
+      <div class="ep-item">
+        <div class="label">Option A — Link to Credly/Certification URL</div>
+        <div class="instruction">Each cert card is a clickable link. Replace the href with your Credly badge or certification verification URL.<br/>
+        <code>href="https://www.credly.com/badges/YOUR-BADGE-ID"</code></div>
+      </div>
+      <div class="ep-item">
+        <div class="label">Option B — Upload PDF to GitHub Repo</div>
+        <div class="instruction">Upload your cert PDF to your GitHub repo, then link it directly.<br/>
+        <code>href="certs/snowpro-core.pdf"</code><br/>
+        Create a <strong>certs/</strong> folder in your repo and upload all PDF certificates there.</div>
+      </div>
+      <div class="ep-item">
+        <div class="label">Add a New Certification</div>
+        <div class="instruction">Copy an existing cert card block in the HTML, paste it after the last cert card, and update the icon, name, issuer, status and href link.</div>
+      </div>
+    </div>
+
+    <div class="ep-section">
+      <h3>👤 Step 4 — Personal Info</h3>
+      <div class="ep-item">
+        <div class="label">Your Name</div>
+        <div class="instruction">Search the file for <strong>Linda M-Okoronkwo</strong> and replace all instances with your preferred display name.</div>
+      </div>
+      <div class="ep-item">
+        <div class="label">Job Title / Role</div>
+        <div class="instruction">Find <strong>Data Engineer</strong> in the hero section and update it to match your exact preferred title.</div>
+      </div>
+      <div class="ep-item">
+        <div class="label">About Me Bio</div>
+        <div class="instruction">Find the About section paragraphs (<code>&lt;p&gt;</code> tags under <code>id="about"</code>) and rewrite with your own story, specialisms, and experience summary.</div>
+      </div>
+    </div>
+
+    <div class="ep-section">
+      <h3>🚀 Step 5 — Publishing Updates</h3>
+      <div class="ep-item">
+        <div class="label">After making any edits</div>
+        <div class="instruction">Save your file as <strong>index.html</strong>, go to your GitHub repo (<strong>LindaMOkoronkwo.github.io</strong>), click <strong>Add file → Upload files</strong>, drag in the updated file, and click <strong>Commit changes</strong>. Your live site updates within 1–2 minutes.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- NAV -->
+<!-- EDIT: Update href on nav-cta to match your CV filename -->
+<nav>
+  <a class="nav-brand" href="#hero"><div class="nb-dot"></div>Linda M-Okoronkwo</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="linda-mokoronkwo-cv.pdf" download>Download CV</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-badge"><div class="hb-dot"></div>Available for new opportunities</div>
+  <h1>
+    <span class="h1-name">Linda M-Okoronkwo.</span>
+    <span class="h1-role">Data Engineer.</span>
+  </h1>
+  <p class="hero-sub">I design and build cloud-native data pipelines that turn raw, messy data into clean, trusted, business-ready intelligence — across Snowflake, Azure, dbt, Airflow, and PySpark.</p>
+  <div class="hero-actions">
+    <a class="btn-primary" href="#projects">View Projects →</a>
+    <a class="btn-outline" href="#contact">Get In Touch</a>
+  </div>
+  <div class="hero-stack">
+    <div class="schip"><div class="cdot" style="background:var(--coral);box-shadow:0 0 6px var(--coral);"></div>Python</div>
+    <div class="schip"><div class="cdot" style="background:var(--teal);box-shadow:0 0 6px var(--teal);"></div>Apache Airflow</div>
+    <div class="schip"><div class="cdot" style="background:var(--gold);box-shadow:0 0 6px var(--gold);"></div>PySpark</div>
+    <div class="schip"><div class="cdot" style="background:var(--sky);box-shadow:0 0 6px var(--sky);"></div>Snowflake</div>
+    <div class="schip"><div class="cdot" style="background:var(--violet);box-shadow:0 0 6px var(--violet);"></div>dbt Core</div>
+    <div class="schip"><div class="cdot" style="background:var(--pink);box-shadow:0 0 6px var(--pink);"></div>Azure</div>
+    <div class="schip"><div class="cdot" style="background:var(--lime);box-shadow:0 0 6px var(--lime);"></div>Power BI</div>
+    <div class="schip"><div class="cdot" style="background:var(--text-muted);"></div>SQL</div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="alt">
+  <div class="about-grid">
+    <div class="about-left">
+      <div class="eyebrow">About Me</div>
+      <h2>Engineering data that businesses can trust.</h2>
+      <!-- EDIT: Replace these paragraphs with your own bio -->
+      <p>I specialise in end-to-end data engineering on the modern data stack — from orchestrating robust Airflow ingestion workflows to building tested, documented dbt models and delivering clean Snowflake data marts that power real decisions.</p>
+      <p>With deep hands-on experience across Azure, Snowflake, Spark, and dbt, I bring both engineering rigour and analytical thinking to every pipeline I build.</p>
+      <div class="about-stats">
+        <!-- EDIT: Update these numbers to reflect your real stats -->
+        <div class="astat"><div class="num">5+</div><div class="lbl">Projects Shipped</div></div>
+        <div class="astat"><div class="num">3+</div><div class="lbl">Years Experience</div></div>
+        <div class="astat"><div class="num">4</div><div class="lbl">Cloud Platforms</div></div>
+        <div class="astat"><div class="num">99%</div><div class="lbl">Pipeline Uptime</div></div>
+      </div>
+    </div>
+    <div class="skills-panel">
+      <div class="sg"><h3>Data Engineering</h3>
+        <div class="sbadges">
+          <span class="sb sb-gold">⚡ PySpark</span>
+          <span class="sb sb-teal">🌬 Apache Airflow</span>
+          <span class="sb sb-coral">🐍 Python</span>
+          <span class="sb sb-muted">🗄 SQL</span>
+        </div>
+      </div>
+      <div class="sg"><h3>Cloud & Warehouse</h3>
+        <div class="sbadges">
+          <span class="sb sb-sky">❄️ Snowflake</span>
+          <span class="sb sb-violet">☁️ Azure</span>
+          <span class="sb sb-violet">🔷 Azure Data Factory</span>
+          <span class="sb sb-pink">🔷 Azure Databricks</span>
+        </div>
+      </div>
+      <div class="sg"><h3>Transform & BI</h3>
+        <div class="sbadges">
+          <span class="sb sb-coral">🔧 dbt Core</span>
+          <span class="sb sb-lime">📊 Power BI</span>
+        </div>
+      </div>
+      <div class="sg"><h3>DevOps & Tooling</h3>
+        <div class="sbadges">
+          <span class="sb sb-muted">🐳 Docker</span>
+          <span class="sb sb-muted">🔀 Git</span>
+          <span class="sb sb-muted">🐧 Linux</span>
+          <span class="sb sb-teal">✅ Great Expectations</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<!-- EDIT: For each project, update href on the "View on GitHub" button to your real repo URL -->
+<section id="projects">
+  <div class="eyebrow">Featured Work</div>
+  <h2>Projects</h2>
+  <p class="section-intro">Five production-grade data engineering solutions — each grounded in a real problem, a deliberate approach, and a measurable outcome.</p>
+
+  <div class="projects-grid">
+
+    <!-- PROJECT 01 -->
+    <div class="pcard" style="border-color:var(--coral);box-shadow:0 0 30px #ff6b3518;">
+      <div class="ptop" style="background:linear-gradient(90deg,var(--coral-bg),var(--gold-bg));border-bottom:1px solid var(--border);">
+        <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--coral);">PROJECT_01 · ELT · Analytics Engineering</span>
+        <span style="font-size:22px;">❄️</span>
+      </div>
+      <div class="pbody">
+        <h3>ELT Pipeline — dbt + Snowflake Analytics Platform</h3>
+        <p class="psummary">Production-grade ELT pipeline centralising five source systems into Snowflake, transformed via a layered dbt architecture, orchestrated daily in Airflow, and served to business via Power BI.</p>
+        <div class="pdetails">
+          <div class="dblock" style="background:var(--pink-bg);border-color:var(--pink-border);">
+            <h4 style="color:var(--pink);">⛔ The Problem</h4>
+            <p>Business reporting relied on fragmented spreadsheets from five disconnected systems — inconsistent numbers, manual refresh cycles, zero data lineage.</p>
+          </div>
+          <div class="dblock" style="background:var(--teal-bg);border-color:var(--teal-border);">
+            <h4 style="color:var(--teal);">✅ The Approach</h4>
+            <p>Three-layer dbt architecture (staging → intermediate → marts) on Snowflake. Daily Airflow DAGs. dbt tests and docs enforce data quality and lineage end-to-end.</p>
+          </div>
+        </div>
+        <div class="ptags">
+          <span class="ptag">Snowflake</span><span class="ptag">dbt Core</span><span class="ptag">Apache Airflow</span>
+          <span class="ptag">Python</span><span class="ptag">Azure Data Factory</span><span class="ptag">Power BI</span>
+        </div>
+        <div class="pfooter">
+          <div class="poutcomes">
+            <div class="outcome"><div class="odot" style="background:var(--coral);box-shadow:0 0 5px var(--coral);"></div>50+ dbt models</div>
+            <div class="outcome"><div class="odot" style="background:var(--teal);box-shadow:0 0 5px var(--teal);"></div>40% cost reduction</div>
+            <div class="outcome"><div class="odot" style="background:var(--gold);box-shadow:0 0 5px var(--gold);"></div>99.8% uptime</div>
+          </div>
+          <div class="plinks">
+            <!-- EDIT: Replace href with your actual GitHub repo URL for this project -->
+            <a class="plink pl-primary" style="background:linear-gradient(135deg,var(--coral),#e84a00);box-shadow:0 2px 12px #ff6b3544;" href="https://github.com/LindaMOkoronkwo/dbt-snowflake-pipeline" target="_blank">View on GitHub →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 02 -->
+    <div class="pcard" style="border-color:var(--teal);box-shadow:0 0 30px #00d4aa18;">
+      <div class="ptop" style="background:linear-gradient(90deg,var(--teal-bg),var(--sky-bg));border-bottom:1px solid var(--border);">
+        <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--teal);">PROJECT_02 · Streaming · Real-Time</span>
+        <span style="font-size:22px;">⚡</span>
+      </div>
+      <div class="pbody">
+        <h3>Real-Time Analytics Pipeline</h3>
+        <p class="psummary">Event-driven streaming pipeline ingesting high-frequency data, processing with PySpark Structured Streaming, and delivering live Power BI dashboards for operational monitoring.</p>
+        <div class="pdetails">
+          <div class="dblock" style="background:var(--pink-bg);border-color:var(--pink-border);">
+            <h4 style="color:var(--pink);">⛔ The Problem</h4>
+            <p>Operational teams worked off 24-hour batch reports, reacting to issues after the fact with no ability to catch anomalies as they occurred.</p>
+          </div>
+          <div class="dblock" style="background:var(--teal-bg);border-color:var(--teal-border);">
+            <h4 style="color:var(--teal);">✅ The Approach</h4>
+            <p>Azure Event Hubs → PySpark Structured Streaming → Snowflake Dynamic Tables. Power BI auto-refreshes every 15 minutes with automated Logic Apps alerting.</p>
+          </div>
+        </div>
+        <div class="ptags">
+          <span class="ptag">Azure Event Hubs</span><span class="ptag">PySpark Streaming</span>
+          <span class="ptag">Snowflake</span><span class="ptag">Python</span><span class="ptag">Power BI</span>
+        </div>
+        <div class="pfooter">
+          <div class="poutcomes">
+            <div class="outcome"><div class="odot" style="background:var(--teal);box-shadow:0 0 5px var(--teal);"></div>24hr → 15min latency</div>
+            <div class="outcome"><div class="odot" style="background:var(--sky);box-shadow:0 0 5px var(--sky);"></div>Real-time alerting</div>
+            <div class="outcome"><div class="odot" style="background:var(--violet);box-shadow:0 0 5px var(--violet);"></div>Auto-scaling</div>
+          </div>
+          <div class="plinks">
+            <!-- EDIT: Replace href with your actual GitHub repo URL for this project -->
+            <a class="plink pl-primary" style="background:linear-gradient(135deg,var(--teal),#009e7a);box-shadow:0 2px 12px #00d4aa44;" href="https://github.com/LindaMOkoronkwo/realtime-analytics-pipeline" target="_blank">View on GitHub →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 03 -->
+    <div class="pcard" style="border-color:var(--violet);box-shadow:0 0 30px #c084fc18;">
+      <div class="ptop" style="background:linear-gradient(90deg,var(--violet-bg),var(--pink-bg));border-bottom:1px solid var(--border);">
+        <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--violet);">PROJECT_03 · Migration · Cloud Modernisation</span>
+        <span style="font-size:22px;">☁️</span>
+      </div>
+      <div class="pbody">
+        <h3>Data Warehouse Migration to Snowflake</h3>
+        <p class="psummary">Full migration of a legacy on-premise SQL Server warehouse to Snowflake on Azure — schema redesign, historical data reload, and zero-downtime phased cutover.</p>
+        <div class="pdetails">
+          <div class="dblock" style="background:var(--pink-bg);border-color:var(--pink-border);">
+            <h4 style="color:var(--pink);">⛔ The Problem</h4>
+            <p>An ageing on-premise SQL Server warehouse was a bottleneck — slow queries, costly maintenance, no scalability, zero self-serve for analysts.</p>
+          </div>
+          <div class="dblock" style="background:var(--teal-bg);border-color:var(--teal-border);">
+            <h4 style="color:var(--teal);">✅ The Approach</h4>
+            <p>Redesigned schemas for Snowflake's columnar engine. Built incremental and full-load ADF pipelines, validated fidelity at each stage, ran a phased cutover with full rollback.</p>
+          </div>
+        </div>
+        <div class="ptags">
+          <span class="ptag">Snowflake</span><span class="ptag">Azure Data Factory</span>
+          <span class="ptag">SQL Server</span><span class="ptag">Python</span><span class="ptag">Azure Blob Storage</span>
+        </div>
+        <div class="pfooter">
+          <div class="poutcomes">
+            <div class="outcome"><div class="odot" style="background:var(--violet);box-shadow:0 0 5px var(--violet);"></div>Zero-downtime cutover</div>
+            <div class="outcome"><div class="odot" style="background:var(--teal);box-shadow:0 0 5px var(--teal);"></div>60% faster queries</div>
+            <div class="outcome"><div class="odot" style="background:var(--gold);box-shadow:0 0 5px var(--gold);"></div>35% cost saving</div>
+          </div>
+          <div class="plinks">
+            <!-- EDIT: Replace href with your actual GitHub repo URL for this project -->
+            <a class="plink pl-primary" style="background:linear-gradient(135deg,var(--violet),#5b21b6);box-shadow:0 2px 12px #c084fc44;" href="https://github.com/LindaMOkoronkwo/snowflake-dw-migration" target="_blank">View on GitHub →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 04 -->
+    <div class="pcard" style="border-color:var(--gold);box-shadow:0 0 30px #ffcc4418;">
+      <div class="ptop" style="background:linear-gradient(90deg,var(--gold-bg),var(--coral-bg));border-bottom:1px solid var(--border);">
+        <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--gold);">PROJECT_04 · Orchestration · Azure</span>
+        <span style="font-size:22px;">🔷</span>
+      </div>
+      <div class="pbody">
+        <h3>Azure Data Factory Enterprise Pipeline</h3>
+        <p class="psummary">Scalable, parameterised ADF framework ingesting from REST APIs, flat files, and databases into Azure Data Lake — with metadata-driven control and automated alerting.</p>
+        <div class="pdetails">
+          <div class="dblock" style="background:var(--pink-bg);border-color:var(--pink-border);">
+            <h4 style="color:var(--pink);">⛔ The Problem</h4>
+            <p>Teams maintained siloed ingestion scripts with no standard monitoring, inconsistent error handling, and no central pipeline health visibility.</p>
+          </div>
+          <div class="dblock" style="background:var(--teal-bg);border-color:var(--teal-border);">
+            <h4 style="color:var(--teal);">✅ The Approach</h4>
+            <p>Config-driven ADF framework with parameterised templates for REST, SFTP, and JDBC sources. Metadata control table, Logic Apps alerting, Power BI ops dashboard.</p>
+          </div>
+        </div>
+        <div class="ptags">
+          <span class="ptag">Azure Data Factory</span><span class="ptag">Azure Data Lake Gen2</span>
+          <span class="ptag">Python</span><span class="ptag">Azure Logic Apps</span><span class="ptag">Power BI</span>
+        </div>
+        <div class="pfooter">
+          <div class="poutcomes">
+            <div class="outcome"><div class="odot" style="background:var(--gold);box-shadow:0 0 5px var(--gold);"></div>12 sources unified</div>
+            <div class="outcome"><div class="odot" style="background:var(--coral);box-shadow:0 0 5px var(--coral);"></div>Metadata-driven</div>
+            <div class="outcome"><div class="odot" style="background:var(--teal);box-shadow:0 0 5px var(--teal);"></div>Auto alerting</div>
+          </div>
+          <div class="plinks">
+            <!-- EDIT: Replace href with your actual GitHub repo URL for this project -->
+            <a class="plink pl-primary" style="background:linear-gradient(135deg,var(--gold),#b86a00);box-shadow:0 2px 12px #ffcc4444;" href="https://github.com/LindaMOkoronkwo/adf-enterprise-pipeline" target="_blank">View on GitHub →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 05 -->
+    <div class="pcard" style="border-color:var(--pink);box-shadow:0 0 30px #ff6eb418;">
+      <div class="ptop" style="background:linear-gradient(90deg,var(--pink-bg),var(--violet-bg));border-bottom:1px solid var(--border);">
+        <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--pink);">PROJECT_05 · Analytics · Insights</span>
+        <span style="font-size:22px;">📊</span>
+      </div>
+      <div class="pbody">
+        <h3>Customer Behaviour Analytics Platform</h3>
+        <p class="psummary">End-to-end analytics solution transforming raw customer event logs into RFM segmentation models and executive Power BI dashboards for data-driven marketing decisions.</p>
+        <div class="pdetails">
+          <div class="dblock" style="background:var(--pink-bg);border-color:var(--pink-border);">
+            <h4 style="color:var(--pink);">⛔ The Problem</h4>
+            <p>Rich customer data sat unused in raw logs. Marketing had no way to understand customer segments, churn risk, or product engagement patterns.</p>
+          </div>
+          <div class="dblock" style="background:var(--teal-bg);border-color:var(--teal-border);">
+            <h4 style="color:var(--teal);">✅ The Approach</h4>
+            <p>Processed event logs with PySpark on Databricks, built RFM segmentation models in Python, stored in Snowflake, and delivered Power BI dashboards with drill-through capability.</p>
+          </div>
+        </div>
+        <div class="ptags">
+          <span class="ptag">PySpark</span><span class="ptag">Azure Databricks</span>
+          <span class="ptag">Python</span><span class="ptag">Snowflake</span><span class="ptag">Power BI</span><span class="ptag">dbt</span>
+        </div>
+        <div class="pfooter">
+          <div class="poutcomes">
+            <div class="outcome"><div class="odot" style="background:var(--pink);box-shadow:0 0 5px var(--pink);"></div>6 customer segments</div>
+            <div class="outcome"><div class="odot" style="background:var(--teal);box-shadow:0 0 5px var(--teal);"></div>RFM modelling</div>
+            <div class="outcome"><div class="odot" style="background:var(--sky);box-shadow:0 0 5px var(--sky);"></div>Executive dashboards</div>
+          </div>
+          <div class="plinks">
+            <!-- EDIT: Replace href with your actual GitHub repo URL for this project -->
+            <a class="plink pl-primary" style="background:linear-gradient(135deg,var(--pink),#be185d);box-shadow:0 2px 12px #ff6eb444;" href="https://github.com/LindaMOkoronkwo/customer-analytics-platform" target="_blank">View on GitHub →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<!-- EDIT: Click each cert card to open the cert link. Replace each href with your real Credly/cert URL -->
+<section id="certifications" class="alt">
+  <div class="eyebrow">Credentials</div>
+  <h2>Certifications</h2>
+  <p class="section-intro">Verified technical credentials. Click any card to view or verify the certificate.</p>
+  <div class="certs-grid">
+
+    <!-- EDIT: Replace href with your Credly badge URL or cert PDF path -->
+    <a class="cert-card" href="https://www.credly.com/badges/YOUR-SNOWPRO-BADGE-ID" target="_blank" style="border-color:var(--sky);">
+      <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--sky),var(--teal));border-radius:var(--r) var(--r) 0 0;"></div>
+      <span class="cert-icon">❄️</span>
+      <h4>SnowPro Core Certification</h4>
+      <div class="cert-issuer">Snowflake</div>
+      <div class="cert-status cs-active">● Active</div>
+      <div class="cert-upload-hint">Click to verify · or replace href with your Credly URL</div>
+    </a>
+
+    <!-- EDIT: Replace href with your Microsoft Learn / Credly badge URL -->
+    <a class="cert-card" href="https://www.credly.com/badges/YOUR-DP203-BADGE-ID" target="_blank" style="border-color:var(--violet);">
+      <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--violet),var(--pink));border-radius:var(--r) var(--r) 0 0;"></div>
+      <span class="cert-icon">☁️</span>
+      <h4>Azure Data Engineer Associate</h4>
+      <div class="cert-issuer">Microsoft · DP-203</div>
+      <div class="cert-status cs-active">● Active</div>
+      <div class="cert-upload-hint">Click to verify · or replace href with your Credly URL</div>
+    </a>
+
+    <!-- EDIT: Replace href with your dbt Labs cert URL -->
+    <a class="cert-card" href="https://www.credential.net/YOUR-DBT-CERT-ID" target="_blank" style="border-color:var(--coral);">
+      <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--coral),var(--gold));border-radius:var(--r) var(--r) 0 0;"></div>
+      <span class="cert-icon">🔧</span>
+      <h4>dbt Certified Developer</h4>
+      <div class="cert-issuer">dbt Labs</div>
+      <div class="cert-status cs-active">● Active</div>
+      <div class="cert-upload-hint">Click to verify · or replace href with your credential URL</div>
+    </a>
+
+    <!-- EDIT: Replace href with your PL-300 cert URL or remove cs-progress when completed -->
+    <a class="cert-card" href="https://www.credly.com/badges/YOUR-PL300-BADGE-ID" target="_blank" style="border-color:var(--gold);">
+      <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--coral));border-radius:var(--r) var(--r) 0 0;"></div>
+      <span class="cert-icon">📊</span>
+      <h4>Power BI Data Analyst</h4>
+      <div class="cert-issuer">Microsoft · PL-300</div>
+      <div class="cert-status cs-progress">◌ In Progress</div>
+      <div class="cert-upload-hint">Update status to "Active" and add Credly link when complete</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrap">
+    <div class="contact-left">
+      <div class="eyebrow">Let's Connect</div>
+      <h2>Open to new roles & collaborations.</h2>
+      <!-- EDIT: Update this paragraph with your own availability note -->
+      <p>I'm actively looking for Data Engineer opportunities where I can build scalable pipelines and solve hard data problems. Recruiter, hiring manager, or fellow data engineer — I'd love to hear from you.</p>
+      <div class="contact-links">
+
+        <!-- EDIT: Replace href with your real GitHub profile URL -->
+        <a class="clink" href="https://github.com/LindaMOkoronkwo" target="_blank" style="border-color:var(--border);--hover-c:var(--coral);" onmouseover="this.style.borderColor='var(--coral)';this.style.boxShadow='0 4px 24px #ff6b3522'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+          <div class="clink-icon" style="background:var(--surface2);">🐙</div>
+          <div class="clink-text"><strong>GitHub</strong><span>github.com/LindaMOkoronkwo</span></div>
+          <span class="clink-arrow">↗</span>
+        </a>
+
+        <!-- EDIT: Replace href with your real LinkedIn profile URL -->
+        <a class="clink" href="https://linkedin.com/in/LindaMOkoronkwo" target="_blank" onmouseover="this.style.borderColor='var(--sky)';this.style.boxShadow='0 4px 24px #38bdf822'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+          <div class="clink-icon" style="background:var(--sky-bg);">💼</div>
+          <div class="clink-text"><strong>LinkedIn</strong><span>linkedin.com/in/LindaMOkoronkwo</span></div>
+          <span class="clink-arrow">↗</span>
+        </a>
+
+        <!-- EDIT: Replace the email address in both href and the span text -->
+        <a class="clink" href="mailto:linda.mokoronkwo@email.com" onmouseover="this.style.borderColor='var(--teal)';this.style.boxShadow='0 4px 24px #00d4aa22'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+          <div class="clink-icon" style="background:var(--teal-bg);">✉️</div>
+          <div class="clink-text"><strong>Email</strong><span>linda.mokoronkwo@email.com</span></div>
+          <span class="clink-arrow">↗</span>
+        </a>
+
+        <!-- EDIT: Replace href with your CV filename after uploading to GitHub repo -->
+        <a class="clink" href="linda-mokoronkwo-cv.pdf" download onmouseover="this.style.borderColor='var(--gold)';this.style.boxShadow='0 4px 24px #ffcc4422'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+          <div class="clink-icon" style="background:var(--gold-bg);">📄</div>
+          <div class="clink-text"><strong>Download CV</strong><span>PDF · Updated 2025</span></div>
+          <span class="clink-arrow">↓</span>
+        </a>
+
+      </div>
+    </div>
+    <div class="contact-form">
+      <h3>Send a message ✉️</h3>
+      <div class="form-field"><label>Your Name</label><input type="text" placeholder="Jane Smith"/></div>
+      <div class="form-field"><label>Email</label><input type="email" placeholder="jane@company.com"/></div>
+      <div class="form-field"><label>Subject</label><input type="text" placeholder="Data Engineer Role — Company Name"/></div>
+      <div class="form-field"><label>Message</label><textarea placeholder="Hi Linda, I came across your portfolio..."></textarea></div>
+      <button class="form-submit">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="footer-dot"></div>
+    Linda M-Okoronkwo · Data Engineer · Open to Work
+  </div>
+  <!-- EDIT: Update these footer links to match your real URLs -->
+  <div class="footer-links">
+    <a href="https://github.com/LindaMOkoronkwo" target="_blank">GitHub</a>
+    <a href="https://linkedin.com/in/LindaMOkoronkwo" target="_blank">LinkedIn</a>
+    <a href="mailto:linda.mokoronkwo@email.com">Email</a>
+  </div>
+</footer>
+
+</body>
+</html>
